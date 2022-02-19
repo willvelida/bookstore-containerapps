@@ -85,7 +85,7 @@ resource todoApiContainerApp 'Microsoft.Web/containerApps@2021-03-01' = {
       containers: [
         {
           name: todoApiContainerName
-          image: 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
+          image: 'velidaacr.azurecr.io/todocontainerapi:v1'
           resources: {
             cpu: '0.5'
             memory: '1Gi'
