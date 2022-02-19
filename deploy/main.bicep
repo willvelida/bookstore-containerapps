@@ -69,7 +69,7 @@ resource todoApiContainerApp 'Microsoft.Web/containerApps@2021-03-01' = {
       }
       registries: [
         {
-          server: containerRegistry.name
+          server: containerRegistryName
           username: containerRegistry.properties.loginServer
           passwordSecretRef: 'container-registry-password'
         }
@@ -85,7 +85,7 @@ resource todoApiContainerApp 'Microsoft.Web/containerApps@2021-03-01' = {
       containers: [
         {
           name: todoApiContainerName
-          image: 'velidaacr.azurecr.io/todocontainerapi:v1'
+          image: 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
           resources: {
             cpu: '0.5'
             memory: '1Gi'
