@@ -1,8 +1,7 @@
-﻿namespace TodoApi.Common.Models
+﻿namespace TodoApi.Common.Request
 {
-    public class TodoItem
+    public class TodoItemRequestDto
     {
-        public string Id { get; set; }
         public string Title { get; set; }
         public bool IsComplete { get; set; }
     }
