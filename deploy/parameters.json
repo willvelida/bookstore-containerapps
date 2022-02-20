@@ -13,6 +13,15 @@
       },
       "containerRegistryName": {
           "value": "velidaacr"
+      },
+      "cosmosDBAccountName": {
+        "value": "velidatodocosmosdb"
+      },
+      "databaseName": {
+        "value": "TodoDB"
+      },
+      "containerName": {
+        "value": "TodoItems"
       }
     }
   }

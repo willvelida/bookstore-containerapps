@@ -10,6 +10,15 @@ param containerAppEnvName string
 @description('Name of the TodoApi Container App')
 param todoApiContainerName string
 
+@description('Name of the Cosmos DB account')
+param cosmosDBAccountName string
+
+@description('Name of the Database inside Cosmos DB')
+param databaseName string
+
+@description('Name of the Container inside Cosmos DB')
+param containerName string
+
 param location string = resourceGroup().location
 
 resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
@@ -97,5 +106,15 @@ resource todoApiContainerApp 'Microsoft.Web/containerApps@2021-03-01' = {
         maxReplicas: 1
       }
     }
+  }
+}
+
+module cosmosDb 'modules/cosmosDB.bicep' = {
+  name: cosmosDBAccountName
+  params: {
+    containerName: containerName
+    cosmosDBAccountName: cosmosDBAccountName
+    databaseName: databaseName
+    location: location
   }
 }
