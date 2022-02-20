@@ -1,9 +1,12 @@
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
-WORKDIR /app
+WORKDIR /app 
 EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
+COPY ["TodoApi.Common/TodoApi.Common.csproj", "TodoApi/"]
+COPY ["TodoApi.Repository/TodoApi.Repository.csproj", "TodoApi/"]
+COPY ["TodoApi.Services/TodoApi.Services.csproj", "TodoApi/"]
 COPY ["TodoApi/TodoApi.csproj", "TodoApi/"]
 RUN dotnet restore "TodoApi/TodoApi.csproj"
 COPY . .
