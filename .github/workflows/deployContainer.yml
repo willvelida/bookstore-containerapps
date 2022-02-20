@@ -1,4 +1,4 @@
-name: Build and Deploy Container Image to App Service
+name: Build and Deploy Container Image to Azure Container Apps
 
 on:
   push:
