@@ -80,7 +80,7 @@ namespace TodoApi.Controllers
             }
         }
 
-        [HttpPut(Name = "UpdateTodoItem")]
+        [HttpPut("{todoItemId}", Name = "UpdateTodoItem")]
         public async Task<IActionResult> Put(string todoItemId, [FromBody] TodoItemRequestDto todoItemRequestDto)
         {
             try
@@ -105,7 +105,7 @@ namespace TodoApi.Controllers
             }
         }
 
-        [HttpDelete(Name = "DeleteTodoItem")]
+        [HttpDelete("{todoItemId}",Name = "DeleteTodoItem")]
         public async Task<IActionResult> Delete(string todoItemId)
         {
             try
