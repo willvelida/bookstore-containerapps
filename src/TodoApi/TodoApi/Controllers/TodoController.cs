@@ -19,7 +19,7 @@ namespace TodoApi.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetTodoItem")]
+        [HttpGet("{todoItemId}")]
         public async Task<IActionResult> Get(string todoItemId)
         {
             try
@@ -45,7 +45,7 @@ namespace TodoApi.Controllers
         }
 
         [HttpGet(Name = "GetAllTodoItems")]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAll()
         {
             try
             {
@@ -80,8 +80,8 @@ namespace TodoApi.Controllers
             }
         }
 
-        [HttpPost(Name = "UpdateTodoItem")]
-        public async Task<IActionResult> Post(string todoItemId, [FromBody] TodoItemRequestDto todoItemRequestDto)
+        [HttpPut(Name = "UpdateTodoItem")]
+        public async Task<IActionResult> Put(string todoItemId, [FromBody] TodoItemRequestDto todoItemRequestDto)
         {
             try
             {
