@@ -8,7 +8,7 @@ on:
 
 defaults:
   run:
-    working-directory: ./src
+    working-directory: ./src/TodoApi
 
 # Note: The use of :latest for the container image is not recommeded for production environments.
 jobs:
