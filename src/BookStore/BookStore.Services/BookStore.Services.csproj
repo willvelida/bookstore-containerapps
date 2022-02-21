@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TodoApi.Repository\TodoApi.Repository.csproj" />
+    <ProjectReference Include="..\BookStore.Repository\BookStore.Repository.csproj" />
   </ItemGroup>
 
 </Project>

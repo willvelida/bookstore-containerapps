@@ -6,22 +6,22 @@
         "value": "velidaloganalytics"
       },
       "containerAppEnvName": {
-          "value": "velidatodoenv"
+          "value": "velidabookstoreenv"
       },
       "todoApiContainerName": {
-          "value": "velidatodoapi"
+          "value": "velidabookstoreapi"
       },
       "containerRegistryName": {
           "value": "velidaacr"
       },
       "cosmosDBAccountName": {
-        "value": "velidatodocosmosdb"
+        "value": "velidabookstorecosmosdb"
       },
       "databaseName": {
-        "value": "TodoDB"
+        "value": "BookStoreDB"
       },
       "containerName": {
-        "value": "TodoItems"
+        "value": "Books"
       }
     }
   }

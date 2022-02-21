@@ -1,4 +1,4 @@
-﻿namespace TodoApi.Common
+﻿namespace BookStore.Common
 {
     public class Settings
     {

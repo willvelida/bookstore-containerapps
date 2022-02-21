@@ -1,4 +1,4 @@
-﻿namespace TodoApi.Common.Response
+﻿namespace BookStore.Common.Response
 {
     public class BaseResponse
     {

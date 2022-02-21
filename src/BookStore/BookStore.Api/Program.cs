@@ -1,9 +1,9 @@
+using BookStore.Common;
+using BookStore.Repository;
+using BookStore.Repository.Interfaces;
+using BookStore.Services;
+using BookStore.Services.Interfaces;
 using Microsoft.Azure.Cosmos;
-using TodoApi.Common;
-using TodoApi.Repository;
-using TodoApi.Repository.Interfaces;
-using TodoApi.Services;
-using TodoApi.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,8 +28,8 @@ builder.Services.AddSingleton(sp =>
     };
     return new CosmosClient(configuration["CosmosDBConnectionString"], cosmosClientOptions);
 });
-builder.Services.AddTransient<ITodoRepository, TodoRepository>();
-builder.Services.AddTransient<ITodoService, TodoService>();
+builder.Services.AddTransient<IBookRepository, BookRepository>();
+builder.Services.AddTransient<IBookService, BookService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

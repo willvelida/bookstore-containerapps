@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace TodoApi.Common.Exceptions
+namespace BookStore.Common.Exceptions
 {
     [Serializable]
     public class NotFoundException : ApplicationException

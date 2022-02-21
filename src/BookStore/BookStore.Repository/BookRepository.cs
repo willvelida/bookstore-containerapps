@@ -1,21 +1,21 @@
-﻿using Microsoft.Azure.Cosmos;
+﻿using BookStore.Common;
+using BookStore.Common.Exceptions;
+using BookStore.Common.Models;
+using BookStore.Repository.Interfaces;
+using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using TodoApi.Common;
-using TodoApi.Common.Exceptions;
-using TodoApi.Common.Models;
-using TodoApi.Repository.Interfaces;
 
-namespace TodoApi.Repository
+namespace BookStore.Repository
 {
-    public class TodoRepository : ITodoRepository
+    public class BookRepository : IBookRepository
     {
         private readonly CosmosClient _cosmosClient;
         private readonly Container _container;
         private readonly Settings _settings;
-        private readonly ILogger<TodoRepository> _logger;
+        private readonly ILogger<BookRepository> _logger;
 
-        public TodoRepository(CosmosClient cosmosClient, IOptions<Settings> options, ILogger<TodoRepository> logger)
+        public BookRepository(CosmosClient cosmosClient, IOptions<Settings> options, ILogger<BookRepository> logger)
         {
             _cosmosClient = cosmosClient;
             _settings = options.Value;
@@ -23,7 +23,7 @@ namespace TodoApi.Repository
             _logger = logger;
         }
 
-        public async Task CreateTodoItem(TodoItem todoItem)
+        public async Task CreateBook(Book book)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace TodoApi.Repository
                     EnableContentResponseOnWrite = false
                 };
 
-                await _container.CreateItemAsync(todoItem, new PartitionKey(todoItem.Id), requestOptions);
+                await _container.CreateItemAsync(book, new PartitionKey(book.Id), requestOptions);
             }
             catch (Exception ex)
             {
@@ -41,15 +41,15 @@ namespace TodoApi.Repository
             }
         }
 
-        public async Task DeleteTodoItem(string todoItemId)
+        public async Task DeleteBook(string bookId)
         {
             try
             {
-                ItemResponse<TodoItem> itemResponse = await _container.DeleteItemAsync<TodoItem>(todoItemId, new PartitionKey(todoItemId));
+                ItemResponse<Book> itemResponse = await _container.DeleteItemAsync<Book>(bookId, new PartitionKey(bookId));
             }
             catch (CosmosException cex) when (cex.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
-                throw new NotFoundException($"No TodoItem with ID: {todoItemId} found!, Delete failed");
+                throw new NotFoundException($"No Book with ID: {bookId} found!, Delete failed");
             }
             catch (Exception ex)
             {
@@ -58,23 +58,23 @@ namespace TodoApi.Repository
             }
         }
 
-        public async Task<List<TodoItem>> GetAllTodoItems()
+        public async Task<List<Book>> GetAllBooks()
         {
             try
             {
-                List<TodoItem> todoItems = new List<TodoItem>();
+                List<Book> books = new List<Book>();
 
                 QueryDefinition queryDefinition = new QueryDefinition("SELECT * FROM c");
 
-                FeedIterator<TodoItem> feedIterator = _container.GetItemQueryIterator<TodoItem>(queryDefinition);
+                FeedIterator<Book> feedIterator = _container.GetItemQueryIterator<Book>(queryDefinition);
 
                 while (feedIterator.HasMoreResults)
                 {
-                    FeedResponse<TodoItem> response = await feedIterator.ReadNextAsync();
-                    todoItems.AddRange(response);
+                    FeedResponse<Book> response = await feedIterator.ReadNextAsync();
+                    books.AddRange(response);
                 }
 
-                return todoItems;
+                return books;
             }
             catch (Exception ex)
             {
@@ -83,17 +83,17 @@ namespace TodoApi.Repository
             }
         }
 
-        public async Task<TodoItem> GetTodoItem(string todoItemId)
+        public async Task<Book> GetBook(string bookId)
         {
             try
             {
-                ItemResponse<TodoItem> itemResponse = await _container.ReadItemAsync<TodoItem>(todoItemId, new PartitionKey(todoItemId));
+                ItemResponse<Book> itemResponse = await _container.ReadItemAsync<Book>(bookId, new PartitionKey(bookId));
 
                 return itemResponse.Resource;
             }
             catch (CosmosException cex) when (cex.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
-                throw new NotFoundException($"No TodoItem with ID: {todoItemId} found!, Delete failed");
+                throw new NotFoundException($"No Book with ID: {bookId} found!, Delete failed");
             }
             catch (Exception ex)
             {
@@ -102,7 +102,7 @@ namespace TodoApi.Repository
             }
         }
 
-        public async Task UpdateTodoItem(string todoItemId, TodoItem todoItem)
+        public async Task UpdateBook(string bookId, Book book)
         {
             try
             {
@@ -111,7 +111,7 @@ namespace TodoApi.Repository
                     EnableContentResponseOnWrite = false
                 };
 
-                await _container.ReplaceItemAsync(todoItem, todoItemId, new PartitionKey(todoItemId));
+                await _container.ReplaceItemAsync(book, bookId, new PartitionKey(bookId));
             }
             catch (Exception ex)
             {

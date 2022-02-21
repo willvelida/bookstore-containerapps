@@ -1,32 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using TodoApi.Common.Exceptions;
-using TodoApi.Common.Request;
-using TodoApi.Common.Response;
-using TodoApi.Services.Interfaces;
+﻿using BookStore.Common.Exceptions;
+using BookStore.Common.Request;
+using BookStore.Common.Response;
+using BookStore.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TodoApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TodoController : ControllerBase
+    public class BookController : ControllerBase
     {
-        private readonly ITodoService _todoService;
-        private readonly ILogger<TodoController> _logger;
+        private readonly IBookService _bookService;
+        private readonly ILogger<BookController> _logger;
 
-        public TodoController(ITodoService todoService, ILogger<TodoController> logger)
+        public BookController(IBookService bookService, ILogger<BookController> logger)
         {
-            _todoService = todoService;
+            _bookService = bookService;
             _logger = logger;
         }
 
-        [HttpGet("{todoItemId}")]
-        public async Task<IActionResult> Get(string todoItemId)
+        [HttpGet("{bookId}")]
+        public async Task<IActionResult> Get(string bookId)
         {
             try
             {
-                var todoItem = await _todoService.RetrieveTodoItem(todoItemId);
+                var book = await _bookService.RetrieveBook(bookId);
 
-                return new OkObjectResult(todoItem);
+                return new OkObjectResult(book);
             }
             catch (NotFoundException nex)
             {
@@ -44,12 +44,12 @@ namespace TodoApi.Controllers
             }
         }
 
-        [HttpGet(Name = "GetAllTodoItems")]
+        [HttpGet(Name = "GetAllBooks")]
         public async Task<IActionResult> GetAll()
         {
             try
             {
-                var todoItems = await _todoService.GetAllTodoItems();
+                var todoItems = await _bookService.GetAllBooks();
 
                 return new OkObjectResult(todoItems);
             }
@@ -62,12 +62,12 @@ namespace TodoApi.Controllers
             }
         }
 
-        [HttpPost(Name = "CreateTodoItem")]
-        public async Task<IActionResult> Create([FromBody] TodoItemRequestDto todoItemRequestDto)
+        [HttpPost(Name = "CreateBook")]
+        public async Task<IActionResult> Create([FromBody] BookRequestDto bookRequestDto)
         {
             try
             {
-                await _todoService.AddTodoItem(todoItemRequestDto);
+                await _bookService.AddBook(bookRequestDto);
 
                 return new CustomRequestObjectResult(null, StatusCodes.Status201Created);
             }
@@ -80,12 +80,12 @@ namespace TodoApi.Controllers
             }
         }
 
-        [HttpPut("{todoItemId}", Name = "UpdateTodoItem")]
-        public async Task<IActionResult> Put(string todoItemId, [FromBody] TodoItemRequestDto todoItemRequestDto)
+        [HttpPut("{bookId}", Name = "UpdateBook")]
+        public async Task<IActionResult> Put(string bookId, [FromBody] BookRequestDto bookRequestDto)
         {
             try
             {
-                await _todoService.UpdateTodoItem(todoItemId, todoItemRequestDto);
+                await _bookService.UpdateBook(bookId, bookRequestDto);
 
                 return new CustomRequestObjectResult(null, StatusCodes.Status204NoContent);
             }
@@ -105,12 +105,12 @@ namespace TodoApi.Controllers
             }
         }
 
-        [HttpDelete("{todoItemId}",Name = "DeleteTodoItem")]
-        public async Task<IActionResult> Delete(string todoItemId)
+        [HttpDelete("{bookId}",Name = "DeleteBook")]
+        public async Task<IActionResult> Delete(string bookId)
         {
             try
             {
-                await _todoService.DeleteTodoItem(todoItemId);
+                await _bookService.DeleteBook(bookId);
 
                 return new CustomRequestObjectResult(null, StatusCodes.Status204NoContent);
             }

@@ -7,8 +7,8 @@ param containerRegistryName string
 @description('Name of the Container App Environment')
 param containerAppEnvName string
 
-@description('Name of the TodoApi Container App')
-param todoApiContainerName string
+@description('Name of the Book Store Container App')
+param bookApiContainerName string
 
 @description('Name of the Cosmos DB account')
 param cosmosDBAccountName string
@@ -59,8 +59,8 @@ resource containerAppEnvironment 'Microsoft.Web/kubeEnvironments@2021-03-01' = {
   }
 }
 
-resource todoApiContainerApp 'Microsoft.Web/containerApps@2021-03-01' = {
-  name: todoApiContainerName
+resource bookApiContainerApp 'Microsoft.Web/containerApps@2021-03-01' = {
+  name: bookApiContainerName
   location: location
   properties: {
     kubeEnvironmentId: containerAppEnvironment.id
@@ -93,7 +93,7 @@ resource todoApiContainerApp 'Microsoft.Web/containerApps@2021-03-01' = {
     template: {
       containers: [
         {
-          name: todoApiContainerName
+          name: bookApiContainerName
           image: 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
           resources: {
             cpu: '0.5'

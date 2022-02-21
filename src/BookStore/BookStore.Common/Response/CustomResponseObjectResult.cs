@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace TodoApi.Common.Response
+namespace BookStore.Common.Response
 {
     public class CustomRequestObjectResult : ActionResult, IActionResult
     {

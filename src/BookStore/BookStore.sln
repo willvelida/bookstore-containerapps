@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoApi", "TodoApi\TodoApi.csproj", "{24295733-8691-46DA-8510-D6F19C60BDF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookStore.Api", "BookStore.Api\BookStore.Api.csproj", "{24295733-8691-46DA-8510-D6F19C60BDF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApi.Common", "TodoApi.Common\TodoApi.Common.csproj", "{7082DC48-1760-4D37-97FA-CDBCB94F6AB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookStore.Common", "BookStore.Common\BookStore.Common.csproj", "{7082DC48-1760-4D37-97FA-CDBCB94F6AB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApi.Repository", "TodoApi.Repository\TodoApi.Repository.csproj", "{A44F7241-026C-4719-B3A0-A43F35BA5446}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookStore.Repository", "BookStore.Repository\BookStore.Repository.csproj", "{A44F7241-026C-4719-B3A0-A43F35BA5446}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApi.Services", "TodoApi.Services\TodoApi.Services.csproj", "{40098A41-08F2-4522-BD33-04142CA5A005}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookStore.Services", "BookStore.Services\BookStore.Services.csproj", "{40098A41-08F2-4522-BD33-04142CA5A005}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
