@@ -8,7 +8,7 @@
       "containerAppEnvName": {
           "value": "velidabookstoreenv"
       },
-      "todoApiContainerName": {
+      "bookApiContainerName": {
           "value": "velidabookstoreapi"
       },
       "containerRegistryName": {
