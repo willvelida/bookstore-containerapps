@@ -8,7 +8,7 @@ on:
 
 defaults:
   run:
-    working-directory: ./src/TodoApi
+    working-directory: ./src/BookStore
 
 # Note: The use of :latest for the container image is not recommeded for production environments.
 jobs:
@@ -30,5 +30,5 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-        docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/velidatodoapi:${{ github.sha }}
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/velidatodoapi:${{ github.sha }}
+        docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/bookstoreapi:${{ github.sha }}
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/bookstoreapi:${{ github.sha }}
