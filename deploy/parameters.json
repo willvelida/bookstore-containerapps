@@ -22,6 +22,9 @@
       },
       "containerName": {
         "value": "Books"
-      }
+      },
+      "apimName": {
+        "value": "velidabooksapi"
+      }      
     }
   }

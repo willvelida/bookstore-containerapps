@@ -19,7 +19,13 @@ param databaseName string
 @description('Name of the Container inside Cosmos DB')
 param containerName string
 
+@description('Name of the APIM instance')
+param apimName string
+
 param location string = resourceGroup().location
+
+var publisherEmail = 'willvelida@hotmail.co.uk'
+var publisherName = 'Will Velida'
 
 resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
   name: logAnalyticsName
@@ -116,5 +122,18 @@ module cosmosDb 'modules/cosmosDB.bicep' = {
     cosmosDBAccountName: cosmosDBAccountName
     databaseName: databaseName
     location: location
+  }
+}
+
+resource apim 'Microsoft.ApiManagement/service@2021-08-01' = {
+  name: apimName
+  location: location
+  sku: {
+    capacity: 1
+    name: 'Developer'
+  }
+  properties: {
+    publisherEmail: publisherEmail
+    publisherName: publisherName
   }
 }
