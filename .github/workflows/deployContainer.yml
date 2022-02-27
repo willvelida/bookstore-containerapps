@@ -48,4 +48,7 @@ jobs:
       uses: Azure/cli@v1
       with:
         inlineScript: |
-          az containerapp github-action add --repo-url "https://github.com/willvelida/bookstore-containerapps" --docker-file-path "./Dockerfile" --branch main --name velidabookstoreapi --resource-group ${{ secrets.AZURE_RG }} --registry-url ${{ secrets.REGISTRY_LOGIN_SERVER }} --registry-username ${{ secrets.REGISTRY_USERNAME }} --registry-password ${{ secrets.REGISTRY_PASSWORD }} --service-principal-client-id ${{ secrets.REGISTRY_USERNAME }} --service-principal-client-secret ${{ secrets.REGISTRY_PASSWORD }} --service-principal-tenant-id ${{ secrets.TENANT_ID }} --token ${{ secrets.PAT_TOKEN }}
+          echo "Installing containerapp extension"
+          az extension add --source https://workerappscliextension.blob.core.windows.net/azure-cli-extension/containerapp-0.2.0-py2.py3-none-any.whl --yes
+          echo "Starting Deploying"
+          az containerapp update -n velidabookstoreapi -g todocontainerapp-rg -i ${{ secrets.REGISTRY_LOGIN_SERVER }}/velidabookstoreapi:${{ github.sha }} --registry-login-server ${{ secrets.REGISTRY_LOGIN_SERVER }} --registry-username  ${{ secrets.REGISTRY_USERNAME }} --registry-password ${{ secrets.REGISTRY_PASSWORD }} --debug

@@ -7,31 +7,6 @@ on:
   workflow_dispatch:
 
 jobs:
-
-  build-container-image:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./src/BookStore
-    steps:
-    - name: 'Checkout GitHub Action'
-      uses: actions/checkout@main
-      
-    - name: 'Login via Azure CLI'
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-    
-    - name: 'Build and Push Image to ACR'
-      uses: azure/docker-login@v1
-      with:
-        login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-        username: ${{ secrets.REGISTRY_USERNAME }}
-        password: ${{ secrets.REGISTRY_PASSWORD }}
-    - run: |
-        docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/bookstoreapi:${{ github.sha }}
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/bookstoreapi:${{ github.sha }}
-
   lint:
     needs: build-container-image
     runs-on: ubuntu-latest
