@@ -100,7 +100,7 @@ resource bookApiContainerApp 'Microsoft.Web/containerApps@2021-03-01' = {
       containers: [
         {
           name: bookApiContainerName
-          image: 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
+          image: 'velidaacr.azurecr.io/bookstoreapi:109d5a42286730a3038d73925ad75326e2d517c6'
           resources: {
             cpu: '0.5'
             memory: '1Gi'
