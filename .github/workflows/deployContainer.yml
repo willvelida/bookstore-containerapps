@@ -34,6 +34,7 @@ jobs:
 
   deploy-container-app:
     runs-on: ubuntu-latest
+    needs: build-container-image
     steps:
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@main
