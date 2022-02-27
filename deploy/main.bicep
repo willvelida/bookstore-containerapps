@@ -22,6 +22,12 @@ param containerName string
 @description('Name of the APIM instance')
 param apimName string
 
+@description('Username for the Container Registry')
+param acrUserName string
+
+@description('Password for the Container Registry')
+param acrPassword string
+
 param location string = resourceGroup().location
 
 var publisherEmail = 'willvelida@hotmail.co.uk'
@@ -84,15 +90,15 @@ resource bookApiContainerApp 'Microsoft.Web/containerApps@2021-03-01' = {
       }
       registries: [
         {
-          server: containerRegistryName
-          username: containerRegistry.properties.loginServer
+          server: containerRegistry.properties.loginServer
+          username: acrUserName
           passwordSecretRef: 'container-registry-password'
         }
       ]
       secrets: [
         {
           name: 'container-registry-password'
-          value: containerRegistry.listCredentials().passwords[0].value
+          value: acrPassword
         }
       ]
     }

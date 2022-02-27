@@ -25,6 +25,12 @@
       },
       "apimName": {
         "value": "velidabooksapi"
+      },
+      "acrUserName": {
+        "value": ""
+      },
+      "acrPassword": {
+        "value": ""
       }      
     }
   }

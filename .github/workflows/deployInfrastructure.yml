@@ -47,6 +47,7 @@ jobs:
         with:
           inlineScript: |
             az deployment group what-if --resource-group ${{ secrets.AZURE_RG }} --template-file ./deploy/main.bicep --parameters ./deploy/parameters.json
+  
   deploy:
     runs-on: ubuntu-latest
     environment: Dev
@@ -58,11 +59,9 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
         
-      - name: Deploy Bicep File
-        uses: azure/arm-deploy@v1
+      - uses: Azure/cli@v1
+        name: Deploy Bicep File
         with:
-          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-          resourceGroupName: ${{ secrets.AZURE_RG }}
-          template: ./deploy/main.bicep
-          parameters: ./deploy/parameters.json
-          failOnStdErr: false
+          inlineScript: |
+            az deployment group create --name bookstorecontainerapp --resource-group ${{ secrets.AZURE_RG }} --template-file ./deploy/main.bicep --parameters ./deploy/parameters.json acrUserName=${{ secrets.REGISTRY_USERNAME }} acrPassword=${{ secrets.REGISTRY_PASSWORD }}
+  
