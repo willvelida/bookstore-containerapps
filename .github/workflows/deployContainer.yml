@@ -10,7 +10,6 @@ defaults:
   run:
     working-directory: ./src/BookStore
 
-# Note: The use of :latest for the container image is not recommeded for production environments.
 jobs:
   build-container-image:
     runs-on: ubuntu-latest
@@ -32,3 +31,26 @@ jobs:
     - run: |
         docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/bookstoreapi:${{ github.sha }}
         docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/bookstoreapi:${{ github.sha }}
+
+  deploy-container-app:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 'Checkout GitHub Action'
+      uses: actions/checkout@main
+      
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: 'Install Azure Container Apps Extension for the CLI'
+      uses: Azure/cli@v1
+      with:
+        inlineScript: |
+          az extension add --source https://workerappscliextension.blob.core.windows.net/azure-cli-extension/containerapp-0.2.2-py2.py3-none-any.whl
+
+    - name: 'Deploy Container App'
+      uses: Azure/cli@v1
+      with:
+        inlineScript: |
+          az containerapp github-action add --repo-url "https://github.com/willvelida/bookstore-containerapps" --docker-file-path "./Dockerfile" --branch main --name velidabookstoreapi --resource-group ${{ secrets.AZURE_RG }} --registry-url ${{ secrets.REGISTRY_LOGIN_SERVER }} --registry-username ${{ secrets.REGISTRY_USERNAME }} --registry-password ${{ secrets.REGISTRY_PASSWORD }} --service-principal-client-id ${{ secrets.REGISTRY_USERNAME }} --service-principal-client-secret ${{ secrets.REGISTRY_PASSWORD }} --service-principal-tenant-id ${{ secrets.TENANT_ID }} --token ${{ secrets.PAT_TOKEN }}
