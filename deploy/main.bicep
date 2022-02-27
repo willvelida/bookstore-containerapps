@@ -102,15 +102,15 @@ resource bookApiContainerApp 'Microsoft.Web/containerApps@2021-03-01' = {
           value: acrPassword
         }
         {
-          name: 'CosmosDBConnectionString'
+          name: 'cosmosdbconnectionstring'
           value: cosmosDBAccount.listConnectionStrings().connectionStrings[0].connectionString
         }
         {
-          name: 'Settings:DatabaseName'
+          name: 'databaseName'
           value: cosmosDatabase.name
         }
         {
-          name: 'Settings:ContainerName'
+          name: 'containerName'
           value: cosmosContainer.name
         }
       ]
