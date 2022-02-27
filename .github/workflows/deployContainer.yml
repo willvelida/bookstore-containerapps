@@ -44,12 +44,6 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: 'Install Azure Container Apps Extension for the CLI'
-      uses: Azure/cli@v1
-      with:
-        inlineScript: |
-          az extension add --source https://workerappscliextension.blob.core.windows.net/azure-cli-extension/containerapp-0.2.2-py2.py3-none-any.whl
-
     - name: 'Deploy Container App'
       uses: Azure/cli@v1
       with:
