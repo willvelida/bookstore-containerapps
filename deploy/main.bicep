@@ -26,6 +26,7 @@ param apimName string
 param acrUserName string
 
 @description('Password for the Container Registry')
+@secure()
 param acrPassword string
 
 param location string = resourceGroup().location
@@ -100,6 +101,18 @@ resource bookApiContainerApp 'Microsoft.Web/containerApps@2021-03-01' = {
           name: 'container-registry-password'
           value: acrPassword
         }
+        {
+          name: 'CosmosDBConnectionString'
+          value: cosmosDBAccount.listConnectionStrings().connectionStrings[0].connectionString
+        }
+        {
+          name: 'Settings:DatabaseName'
+          value: cosmosDatabase.name
+        }
+        {
+          name: 'Settings:ContainerName'
+          value: cosmosContainer.name
+        }
       ]
     }
     template: {
@@ -121,13 +134,49 @@ resource bookApiContainerApp 'Microsoft.Web/containerApps@2021-03-01' = {
   }
 }
 
-module cosmosDb 'modules/cosmosDB.bicep' = {
+resource cosmosDBAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   name: cosmosDBAccountName
-  params: {
-    containerName: containerName
-    cosmosDBAccountName: cosmosDBAccountName
-    databaseName: databaseName
-    location: location
+  location: location
+  kind: 'GlobalDocumentDB'
+  properties: {
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Session'
+    }
+    enableFreeTier: true
+    databaseAccountOfferType: 'Standard' 
+    locations: [
+      {
+        locationName: location
+        failoverPriority: 0
+        isZoneRedundant: false
+      }
+    ]
+  }
+}
+
+resource cosmosDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10-15' = {
+  name: databaseName
+  parent: cosmosDBAccount
+  properties: {
+    resource: {
+      id: databaseName
+    }
+  }
+}
+
+resource cosmosContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2021-10-15' = {
+  name: containerName
+  parent: cosmosDatabase
+  properties: {
+    resource: {
+      id: containerName
+      partitionKey: {
+        kind: 'Hash'
+        paths: [
+          '/id'
+        ]
+      }
+    }
   }
 }
 
