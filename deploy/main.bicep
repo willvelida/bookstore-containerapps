@@ -106,11 +106,11 @@ resource bookApiContainerApp 'Microsoft.Web/containerApps@2021-03-01' = {
           value: cosmosDBAccount.listConnectionStrings().connectionStrings[0].connectionString
         }
         {
-          name: 'databaseName'
+          name: 'databasename'
           value: cosmosDatabase.name
         }
         {
-          name: 'containerName'
+          name: 'containername'
           value: cosmosContainer.name
         }
       ]
