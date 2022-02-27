@@ -33,6 +33,7 @@ jobs:
         docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/bookstoreapi:${{ github.sha }}
 
   lint:
+    needs: build-container-image
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -40,6 +41,7 @@ jobs:
         run: az bicep build --file ./deploy/main.bicep
 
   validate:
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
