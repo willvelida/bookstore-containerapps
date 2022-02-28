@@ -119,7 +119,7 @@ resource bookApiContainerApp 'Microsoft.Web/containerApps@2021-03-01' = {
       containers: [
         {
           name: bookApiContainerName
-          image: 'velidaacr.azurecr.io/bookstoreapi:109d5a42286730a3038d73925ad75326e2d517c6'
+          image: 'velidaacr.azurecr.io/bookstoreapi:99199da5277bcd441f36d090ad4d7107eee4719a'
           resources: {
             cpu: '0.5'
             memory: '1Gi'
@@ -202,7 +202,7 @@ resource getWeatherApi 'Microsoft.ApiManagement/service/apis@2021-08-01' = {
     protocols: [
       'https'
     ]
-    serviceUrl: bookApiContainerApp.properties.configuration.ingress.fqdn
+    serviceUrl: 'https://${bookApiContainerApp.properties.configuration.ingress.fqdn}'
   }
 
   resource getWeatherOperation 'operations' = {
