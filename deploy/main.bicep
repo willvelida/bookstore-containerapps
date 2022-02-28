@@ -192,3 +192,26 @@ resource apim 'Microsoft.ApiManagement/service@2021-08-01' = {
     publisherName: publisherName
   }
 }
+
+resource getWeatherApi 'Microsoft.ApiManagement/service/apis@2021-08-01' = {
+  name: 'WeatherForecast'
+  parent: apim
+  properties: {
+    displayName: 'WeatherForecast'
+    path: 'Weather'
+    protocols: [
+      'https'
+    ]
+    serviceUrl: bookApiContainerApp.properties.configuration.ingress.fqdn
+  }
+
+  resource getWeatherOperation 'operations' = {
+    name: 'GetWeatherForecast'
+    properties: {
+      displayName: 'GetWeatherForecast'
+      method: 'GET'
+      urlTemplate: '/WeatherForecast'
+      description: 'Test Api to see if this works.'
+    }
+  }
+}
