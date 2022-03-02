@@ -55,7 +55,7 @@ resource containerRegistry 'Microsoft.ContainerRegistry/registries@2021-12-01-pr
   }
 }
 
-resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2022-01-01-preview' = {
+resource containerAppEnvironment 'Microsoft.Web/kubeEnvironments@2021-03-01' = {
   name: containerAppEnvName
   location: location 
   kind: 'containerenvironment'
@@ -72,11 +72,11 @@ resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2022-01-01-p
   }
 }
 
-resource bookApiContainerApp 'Microsoft.App/containerApps@2022-01-01-preview' = {
+resource bookApiContainerApp 'Microsoft.Web/containerApps@2021-03-01' = {
   name: bookApiContainerName
   location: location
   properties: {
-    managedEnvironmentId: containerAppEnvironment.id
+    kubeEnvironmentId: containerAppEnvironment.id
     configuration: {
       ingress: {
         external: true
