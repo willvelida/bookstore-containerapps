@@ -26,7 +26,7 @@ builder.Services.AddSingleton(sp =>
             PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase
         }
     };
-    return new CosmosClient(configuration["CosmosDBConnectionString"], cosmosClientOptions);
+    return new CosmosClient(configuration["cosmosdbconnectionstring"], cosmosClientOptions);
 });
 builder.Services.AddTransient<IBookRepository, BookRepository>();
 builder.Services.AddTransient<IBookService, BookService>();

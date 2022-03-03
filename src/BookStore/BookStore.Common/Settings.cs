@@ -2,7 +2,7 @@
 {
     public class Settings
     {
-        public string DatabaseName { get; set; }
-        public string ContainerName { get; set; }
+        public string databasename { get; set; }
+        public string containername { get; set; }
     }
 }
