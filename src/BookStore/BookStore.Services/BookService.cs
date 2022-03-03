@@ -26,8 +26,8 @@ namespace BookStore.Services
                 book.Id = Guid.NewGuid().ToString();
                 book.BookName = bookRequestDto.BookName;
                 book.Price = bookRequestDto.Price;
-                book.Category = book.Category;
-                book.Author = book.Author;
+                book.Category = bookRequestDto.Category;
+                book.Author = bookRequestDto.Author;
 
                 await _bookRepository.CreateBook(book);
             }
