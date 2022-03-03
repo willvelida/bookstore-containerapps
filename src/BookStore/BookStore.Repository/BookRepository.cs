@@ -23,6 +23,11 @@ namespace BookStore.Repository
             _logger = logger;
         }
 
+        /// <summary>
+        /// Creates a book entry in Cosmos DB.
+        /// </summary>
+        /// <param name="book"></param>
+        /// <returns></returns>
         public async Task CreateBook(Book book)
         {
             try
