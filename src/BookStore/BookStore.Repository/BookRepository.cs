@@ -19,7 +19,7 @@ namespace BookStore.Repository
         {
             _cosmosClient = cosmosClient;
             _settings = options.Value;
-            _container = _cosmosClient.GetContainer(_settings.DatabaseName, _settings.ContainerName);
+            _container = _cosmosClient.GetContainer(_settings.databasename, _settings.containername);
             _logger = logger;
         }
 
