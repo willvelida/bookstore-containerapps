@@ -113,6 +113,10 @@ resource bookApiContainerApp 'Microsoft.App/containerApps@2022-01-01-preview' = 
           name: 'containername'
           value: cosmosContainer.name
         }
+        {
+          name: 'containerloginserver'
+          value: containerRegistry.properties.loginServer
+        }
       ]
     }
     template: {
