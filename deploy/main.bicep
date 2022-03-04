@@ -91,7 +91,7 @@ resource bookApiContainerApp 'Microsoft.App/containerApps@2022-01-01-preview' = 
       }
       registries: [
         {
-          server: containerRegistry.properties.loginServer
+          server: '${containerRegistryName}.azurecr.io'
           username: acrUserName
           passwordSecretRef: 'container-registry-password'
         }
