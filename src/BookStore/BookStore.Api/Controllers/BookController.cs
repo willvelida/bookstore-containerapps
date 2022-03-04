@@ -20,6 +20,8 @@ namespace TodoApi.Controllers
         }
 
         [HttpGet("{bookId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(string bookId)
         {
             try
@@ -45,6 +47,7 @@ namespace TodoApi.Controllers
         }
 
         [HttpGet(Name = "GetAllBooks")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -63,6 +66,7 @@ namespace TodoApi.Controllers
         }
 
         [HttpPost(Name = "CreateBook")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> Create([FromBody] BookRequestDto bookRequestDto)
         {
             try
@@ -81,6 +85,8 @@ namespace TodoApi.Controllers
         }
 
         [HttpPut("{bookId}", Name = "UpdateBook")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Put(string bookId, [FromBody] BookRequestDto bookRequestDto)
         {
             try
@@ -106,6 +112,8 @@ namespace TodoApi.Controllers
         }
 
         [HttpDelete("{bookId}",Name = "DeleteBook")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(string bookId)
         {
             try
