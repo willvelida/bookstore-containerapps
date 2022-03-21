@@ -231,4 +231,13 @@ resource bookApi 'Microsoft.ApiManagement/service/apis@2021-08-01' = {
     displayName: 'Books API'
     serviceUrl: 'https://${bookApiContainerApp.properties.configuration.ingress.fqdn}'
   }
+
+  resource getBookById 'operations' = {
+    name: 'GetBookById'
+    properties: {
+      urlTemplate: 'book/{bookId}'
+      method: 'GET'
+      displayName: 'GetBookById' 
+    }
+  }
 }
