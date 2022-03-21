@@ -219,3 +219,16 @@ resource getWeatherApi 'Microsoft.ApiManagement/service/apis@2021-08-01' = {
     }
   }
 }
+
+resource bookApi 'Microsoft.ApiManagement/service/apis@2021-08-01' = {
+  name: 'Books'
+  parent: apim
+  properties: {
+    path: 'Books'
+    protocols: [
+      'https'
+    ]
+    displayName: 'Books API'
+    serviceUrl: 'https://${bookApiContainerApp.properties.configuration.ingress.fqdn}'
+  }
+}
