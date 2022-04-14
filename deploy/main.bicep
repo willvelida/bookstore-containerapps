@@ -53,15 +53,15 @@ resource containerRegistry 'Microsoft.ContainerRegistry/registries@2021-12-01-pr
   properties: {
     adminUserEnabled: true
   }
+  identity: {
+    type: 'SystemAssigned'
+  }
 }
 
 resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2022-01-01-preview' = {
   name: containerAppEnvName
   location: location 
-  kind: 'containerenvironment'
   properties: {
-    environmentType: 'managed'
-    internalLoadBalancerEnabled: false
     appLogsConfiguration: {
       destination: 'log-analytics'
       logAnalyticsConfiguration: {
@@ -75,6 +75,9 @@ resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2022-01-01-p
 resource bookApiContainerApp 'Microsoft.App/containerApps@2022-01-01-preview' = {
   name: bookApiContainerName
   location: location
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {
     managedEnvironmentId: containerAppEnvironment.id
     configuration: {
@@ -123,7 +126,7 @@ resource bookApiContainerApp 'Microsoft.App/containerApps@2022-01-01-preview' = 
       containers: [
         {
           name: bookApiContainerName
-          image: 'velidaacr.azurecr.io/bookstoreapi:99199da5277bcd441f36d090ad4d7107eee4719a'
+          image: 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
           resources: {
             cpu: '0.5'
             memory: '1Gi'
@@ -155,6 +158,9 @@ resource cosmosDBAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
         isZoneRedundant: false
       }
     ]
+  }
+  identity: {
+    type: 'SystemAssigned'
   }
 }
 
@@ -195,49 +201,7 @@ resource apim 'Microsoft.ApiManagement/service@2021-08-01' = {
     publisherEmail: publisherEmail
     publisherName: publisherName
   }
-}
-
-resource getWeatherApi 'Microsoft.ApiManagement/service/apis@2021-08-01' = {
-  name: 'WeatherForecast'
-  parent: apim
-  properties: {
-    displayName: 'WeatherForecast'
-    path: 'Weather'
-    protocols: [
-      'https'
-    ]
-    serviceUrl: 'https://${bookApiContainerApp.properties.configuration.ingress.fqdn}'
-  }
-
-  resource getWeatherOperation 'operations' = {
-    name: 'GetWeatherForecast'
-    properties: {
-      displayName: 'GetWeatherForecast'
-      method: 'GET'
-      urlTemplate: '/WeatherForecast'
-      description: 'Test Api to see if this works.'
-    }
-  }
-}
-
-resource bookApi 'Microsoft.ApiManagement/service/apis@2021-08-01' = {
-  name: 'Books'
-  parent: apim
-  properties: {
-    path: 'Books'
-    protocols: [
-      'https'
-    ]
-    displayName: 'Books API'
-    serviceUrl: 'https://${bookApiContainerApp.properties.configuration.ingress.fqdn}'
-  }
-
-  resource getBookById 'operations' = {
-    name: 'GetBookById'
-    properties: {
-      urlTemplate: 'book/{bookId}'
-      method: 'GET'
-      displayName: 'GetBookById' 
-    }
+  identity: {
+    type: 'SystemAssigned'
   }
 }
